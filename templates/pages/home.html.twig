@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PagesController!{% endblock %}
+{% block body %}
+<section class="container">
+    <div class="row mt-4">
+    <div class="col-lg-7 pt-2">
+        <h2>Bienvenue dans notre galerie</h2>
+        <p>
+            Bienvenue dans notre galerie d'art virtuelle, un espace dédié à la célébration de la créativité sous toutes ses formes. Nous vous invitons à un voyage visuel à travers une collection riche et variée, où chaque œuvre raconte une histoire unique.
+        </p>
+        <p>
+            Que vous soyez un connaisseur averti ou simplement curieux, prenez le temps de parcourir nos sélections. Laissez-vous inspirer, émouvoir et transporter par le talent d'artistes d'ici et d'ailleurs.
+        </p>
+        <p>
+            <a href="{{ path('app_gallery') }}" class="btn btn-secondary">Voir notre galerie</a>
+            <a href="{{ path('app_about') }}" class="btn btn-outline-secondary">En savoir plus</a>
+        </p>
+    </div>
+    <div class="col-lg-4 pt-2 offset-1">
+        <h2>Dernières entrées</h2>
+        <div id="latestCreation" class="carousel slide" data-bs-touch="false" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/favicon.png') }}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/favicon.png') }}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/favicon.png') }}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}
