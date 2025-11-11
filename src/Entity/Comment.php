@@ -27,6 +27,12 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Work $work = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $publishedAt = null;
+
+    #[ORM\Column]
+    private ?bool $isPublic = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +82,30 @@ class Comment
     public function setWork(?Work $work): static
     {
         $this->work = $work;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeImmutable
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): static
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setIsPublic(bool $isPublic): static
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }
