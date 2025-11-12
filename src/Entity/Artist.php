@@ -49,6 +49,9 @@ class Artist
     #[ORM\OneToMany(targetEntity: Work::class, mappedBy: 'artist')]
     private Collection $works;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->works = new ArrayCollection();
@@ -193,6 +196,18 @@ class Artist
                 $work->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

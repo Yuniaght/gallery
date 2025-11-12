@@ -58,6 +58,9 @@ class Work
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'work', orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->favorite = new ArrayCollection();
@@ -227,6 +230,18 @@ class Work
                 $comment->setWork(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }
