@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ work.title}}{% endblock %}
+
+{% block body %}
+    <section class="container mt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>{{ work.title }} - <a href="{{ path('app_artist', {'slug': work.artist.slug}) }}">{{ work.artist.firstName }} {{ work.artist.lastName }}</a></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 text-center">
+                <img src="{{ asset('images/work/' ~work.image) }}" alt="{{ work.image }}" class="object-fit-contain w-100 img-fluid workImg">
+            </div>
+            <div class="col-md-4">
+                <h3>Informations sur l'œuvre</h3>
+                <p>Crée en {{ work.createdAt|date("Y") }}</p>
+                <p>{{ work.description }}</p>
+                <p>Technique utilisée : {{ work.technic.name }}</p>
+                {% if app.user %}
+                    <button class="btn btn-outline-success">Ajouter aux favoris</button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <section class="container mt-2">
+        <div class="row">
+            {% if app.user%}
+            placeholder comment form
+            {% else %}
+            <h2 class="text-center">Vous devez être connecté pour laisser un commentaire</h2>
+            {% endif %}
+        </div>
+        {% for comment in work.comments %}
+            {% if comment.isPublic %}
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-1">
+                        <img src="{{ asset('image/user/' ~comment.user.image) }}" class="img-fluid rounded-start" alt="{{ comment.user.image }}">
+                    </div>
+                    <div class="col-md-11">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comment.user.userName }} - {{ comment.note }}/5</h5>
+                            <p class="card-text">{{ comment.description }}</p>
+                            <p class="card-text"><small class="text-body-secondary">commenté le : {{ comment.publishedAt|date('d-m-Y')  }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

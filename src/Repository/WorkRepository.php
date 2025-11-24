@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Work;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Work>
@@ -16,28 +18,17 @@ class WorkRepository extends ServiceEntityRepository
         parent::__construct($registry, Work::class);
     }
 
-    //    /**
-    //     * @return Work[] Returns an array of Work objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('w.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function knpFindAll(): QueryBuilder
+    {
+        return $this->createQueryBuilder('works')
+                    ->orderBy('works.createdAt', 'DESC');
+    }
 
-    //    public function findOneBySomeField($value): ?Work
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function knpFindByCategory(Category $category): QueryBuilder
+    {
+        return $this->createQueryBuilder('works')
+            ->andWhere('works.category = :category')
+            ->setParameter('category', $category)
+            ->orderBy('works.createdAt', 'DESC');
+    }
 }

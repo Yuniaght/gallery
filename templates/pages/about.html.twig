@@ -1,15 +1,90 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PagesController!{% endblock %}
+{% block title %}Gallery - A propoos.{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">À Propos de la Galerie</h1>
+            <p class="lead text-muted">Notre histoire, notre mission et notre engagement envers l'art.</p>
+        </div>
+        <section class="mb-5">
+            <h2 class="offset-1 h3 mb-3 fw-bold">Notre Mission : L'Art Accessible à Tous</h2>
+            <div class="p-4">
+                <p>La Galerie est née d'une passion simple mais profonde : rendre l'art accessible, inspirant et sans frontières. Dans un monde toujours plus connecté, nous croyons fermement que l'espace numérique est le support idéal pour briser les murs traditionnels de la galerie d'art physique et créer un dialogue direct entre les artistes et le public.</p>
+                <p class="mb-0">Notre objectif n'est pas seulement d'exposer des œuvres ; c'est de vous offrir une expérience immersive et personnelle. Nous souhaitons que chaque visite soit un moment de découverte, d'émerveillement et de connexion émotionnelle avec l'expression humaine.</p>
+            </div>
+        </section>
+        <section class="mb-5">
+            <h2 class="offset-1 h3 mb-4 fw-bold">Notre Collection : Un Kaléidoscope de Talents</h2>
+            <p>Nous sommes fiers de présenter une collection soigneusement curatée qui célèbre la diversité et l'innovation. Notre sélection s'étend sur une multitude de médiums, de styles et de perspectives :</p>
+            <div class="row mt-4 g-3">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card text-center h-100 shadow-sm border-success">
+                        <div class="card-body">
+                            <h4 class="card-title text-success">Peinture</h4>
+                            <p class="card-text text-muted small">(Huile, Acrylique, Aquarelle)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card text-center h-100 shadow-sm border-warning">
+                        <div class="card-body">
+                            <h4 class="card-title text-warning">Photographie</h4>
+                            <p class="card-text text-muted small">(Fine Art, Documentaire, Expérimentale)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card text-center h-100 shadow-sm border-info">
+                        <div class="card-body">
+                            <h4 class="card-title text-info">Sculpture</h4>
+                            <p class="card-text text-muted small">(Art Numérique, Modélisation)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-4">Nous mettons en lumière aussi bien les maîtres établis que les talents émergents, offrant une plateforme vibrante où les voix nouvelles peuvent s'exprimer aux côtés de figures reconnues. Chaque œuvre est choisie pour sa qualité artistique, son impact narratif et l'unicité de sa vision.</p>
+        </section>
+        <section class="mb-5">
+            <h2 class="offset-1 h3 mb-4 fw-bold">Ce Qui Nous Anime</h2>
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item my-2">
+                            <span class="fw-bold text-light">Soutenir la Création :</span> Nous nous engageons à offrir une rémunération juste aux artistes et à promouvoir leur travail à une audience mondiale.
+                        </li>
+                        <li class="list-group-item my-2">
+                            <span class="fw-bold text-light">Éducation et Inspiration :</span> Chaque œuvre est accompagnée d'un contexte détaillé, incluant la biographie de l'artiste et l'histoire derrière la création, pour enrichir votre compréhension et votre appréciation.
+                        </li>
+                        <li class="list-group-item my-2">
+                            <span class="fw-bold text-light">Une Communauté :</span> Plus qu'une galerie, nous aspirons à être un lieu de rencontre pour les amateurs d'art, les collectionneurs et les créateurs. Nous vous invitons à interagir, à partager vos coups de cœur et à faire partie de notre communauté grandissante.
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-5">
+                    <blockquote class="blockquote p-3 rounded border-start border-4 border-secondary h-100 d-flex flex-column justify-content-center shadow-sm">
+                        <p class="mb-0 fst-italic">"L'art lave notre âme de la poussière du quotidien."</p>
+                        <footer class="blockquote-footer mt-2">Pablo Picasso</footer>
+                        <p class="mt-2 small text-muted mb-0">Notre espoir est que votre visite à la Galerie soit cette pause inspirante.</p>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
 
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/src/Controller/PagesController.php</code></li>
-            <li>Your template at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/templates/pages/about.html.twig</code></li>
-        </ul>
+        <hr class="my-5">
+
+        <section class="text-center">
+            <h2 class="h3 mb-3 fw-bold">Prêt à Commencer Votre Voyage ?</h2>
+            <p class="mb-4">Que vous soyez à la recherche d'une pièce pour votre collection, d'une simple dose d'inspiration ou d'un moment d'évasion, le monde de la Galerie vous est grand ouvert.</p>
+
+            <a href="{{ path('app_gallery') }}" class="btn btn-primary btn-lg me-3 mb-2">
+            Parcourez nos Sélections
+            </a>
+            <a href="{{ path('app_artists') }}" class="btn btn-outline-success btn-lg mb-2">
+                Découvrez nos Artistes
+            </a>
+        </section>
+
     </div>
 {% endblock %}

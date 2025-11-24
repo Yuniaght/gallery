@@ -1,15 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PagesController!{% endblock %}
+{% block title %}Gallery - Oeuvres{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/src/Controller/PagesController.php</code></li>
-            <li>Your template at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/templates/pages/gallery.html.twig</code></li>
-        </ul>
-    </div>
+    {% set categoryChosen = app.request.attributes.get('slug') %}
+    {% set firstWork = works|first %}
+    {% set currentSort = app.request.query.get('sort', 'works.createdAt') %}
+    {% set currentDirection = app.request.query.get('direction', 'desc') %}
+    {% if currentSort == 'works.createdAt' and currentDirection == 'desc' %}
+        {% set labelButton = 'Date : Plus récent' %}
+    {% elseif currentSort == 'works.createdAt' and currentDirection == 'asc' %}
+        {% set labelButton = 'Date : Plus ancien' %}
+    {% elseif currentSort == 'works.title' and currentDirection == 'asc' %}
+        {% set labelButton = 'Titre : A - Z' %}
+    {% elseif currentSort == 'works.title' and currentDirection == 'desc' %}
+        {% set labelButton = 'Titre : Z - A' %}
+    {% endif %}
+    {% set routeParams = app.request.attributes.get('_route_params') %}
+    {% set routeName = app.request.attributes.get('_route') %}
+    <main class="container">
+        <section id="posts">
+            <div class="row my-2">
+                <h2 class="display-4">
+                    {% if categoryChosen is not null %}
+                        {% if firstWork %}
+                            Toutes les {{ firstWork.category.name }}s
+                        {% else %}
+                            {{ categoryChosen }}
+                        {% endif %}
+                    {% else %}
+                        Toutes les œuvres.
+                    {% endif %}
+                </h2>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center p-1 rounded">
+                    <div>
+                        {{ knp_pagination_render(works) }}
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn"><span class="fw-bold">Trier par : </span></button>
+                        <button class="btn dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fw-bold">{{ labelButton }}</span><i class="bi bi-sort-down"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-between align-items-center {{ currentSort == 'works.createdAt' and currentDirection == 'desc' ? 'active' : '' }}"
+                                   href="{{ path(routeName, routeParams|merge({'sort': 'works.createdAt', 'direction': 'desc'})) }}">
+                                    Date : Plus récent
+                                    {% if currentSort == 'works.createdAt' and currentDirection == 'desc' %}<i class="bi bi-check"></i>{% endif %}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-between align-items-center {{ currentSort == 'works.createdAt' and currentDirection == 'asc' ? 'active' : '' }}"
+                                   href="{{ path(routeName, routeParams|merge({'sort': 'works.createdAt', 'direction': 'asc'})) }}">
+                                    Date : Plus ancien
+                                    {% if currentSort == 'works.createdAt' and currentDirection == 'asc' %}<i class="bi bi-check"></i>{% endif %}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-between align-items-center {{ currentSort == 'works.title' and currentDirection == 'asc' ? 'active' : '' }}"
+                                   href="{{ path(routeName, routeParams|merge({'sort': 'works.title', 'direction': 'asc'})) }}">
+                                    Titre : A - Z
+                                    {% if currentSort == 'works.title' and currentDirection == 'asc' %}<i class="bi bi-check"></i>{% endif %}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-between align-items-center {{ currentSort == 'works.title' and currentDirection == 'desc' ? 'active' : '' }}"
+                                   href="{{ path(routeName, routeParams|merge({'sort': 'works.title', 'direction': 'desc'})) }}">
+                                    Titre : Z - A
+                                    {% if currentSort == 'works.title' and currentDirection == 'desc' %}<i class="bi bi-check"></i>{% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-md-3 g-2">
+                    {% for work in works %}
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="ratio ratio-16x9">
+                                    <img src="{{ asset('images/work/' ~work.image) }}" class="card-img-top object-fit-cover" alt="{{ work.title }}">
+                                </div>
+                                <h3 class="card-header">{{ work.title }}</h3>
+                                <div class="card-body">
+                                    <h5 class="card_title">Crée par : {{ work.artist.firstName }} {{ work.artist.lastName }} en {{ work.createdAt|date('Y') }}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Œuvre de type : {{ work.category.name }}</li>
+                                    <li class="list-group-item"><a href="{{ path('app_work', {'slug': work.slug}) }}" class="btn btn-outline-success">Lire la suite</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}

@@ -1,4 +1,16 @@
-.banner {
-    height: 400px;
-    overflow: hidden;
+.logo {
+    font-family: "Meie Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.big {
+    font-size: 10rem;
+    color: goldenrod;
+    text-align: center;
+}
+
+.workImg {
+    max-height: 70vh;
+    object-fit: contain;
 }

@@ -1,15 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PagesController!{% endblock %}
+{% block title %}Gallery - Notre équipe.{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/src/Controller/PagesController.php</code></li>
-            <li>Your template at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/templates/pages/team.html.twig</code></li>
-        </ul>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Notre Équipe</h1>
+            <p class="lead text-muted">Rencontrez les personnes derrière la Galerie.</p>
+        </div>
+        <div class="row g-5 justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card h-100 shadow-lg border-0 text-center">
+                    <div class="card-body p-4">
+                        <div class="mx-auto bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+                            <img src="{{ asset('images/team/jb.jpg') }}" class="rounded-circle object-fit-cover" width="120" height="120" alt=JB">
+                        </div>
+                        <h2 class="card-title h3 fw-bold">Jean-Baptiste de Vulder</h2>
+                        <h3 class="card-subtitle mb-3 text-body-tertiary">Yuniaght</h3>
+                        <p class="card-text text-start">
+                            Jean-Baptiste est le fondateur et le visionnaire derrière la Galerie. Il est responsable des grandes orientations stratégiques, des partenariats avec les institutions et assure la pérennité de notre mission : rendre l'art accessible.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-primary text-white fw-bold">
+                        Administrateur
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-5">
+                <div class="card h-100 shadow-lg border-0 text-center">
+                    <div class="card-body p-4">
+                        <div class="mx-auto bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+                            <img src="{{ asset('images/team/bm.jpg') }}" class="rounded-circle object-fit-cover" width="120" height="120" alt=JB">
+                        </div>
+                        <h2 class="card-title h3 fw-bold">Bernard Minet</h2>
+                        <h3 class="card-subtitle mb-3 text-body-tertiary">Berminettes</h3>
+                        <p class="card-text text-start">
+                            Bernard est le gardien de notre communauté. Il veille à la qualité des échanges, et s'assure que l'espace reste bienveillant pour nos visiteurs.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-primary text-white fw-bold">
+                        Modérateur
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

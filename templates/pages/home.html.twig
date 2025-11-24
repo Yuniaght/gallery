@@ -5,6 +5,7 @@
 <section class="container">
     <div class="row mt-4">
     <div class="col-lg-7 pt-2">
+        <h1 class="logo big">Gallery</h1>
         <h2>Bienvenue dans notre galerie</h2>
         <p>
             Bienvenue dans notre galerie d'art virtuelle, un espace dédié à la célébration de la créativité sous toutes ses formes. Nous vous invitons à un voyage visuel à travers une collection riche et variée, où chaque œuvre raconte une histoire unique.
@@ -17,27 +18,27 @@
             <a href="{{ path('app_about') }}" class="btn btn-outline-secondary">En savoir plus</a>
         </p>
     </div>
-    <div class="col-lg-4 pt-2 offset-1">
-        <h2>Dernières entrées</h2>
-        <div id="latestCreation" class="carousel slide" data-bs-touch="false" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for work in latestWork %}
-                    {% if loop.first %}
-                    <div class="card carousel-item active" style="width: 18rem;">
-                    {% else %}
-                    <div class="card carousel-item" style="width: 18rem;">
-                    {% endif %}
-                        <img src="{{ asset('images/work/' ~work.image) }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ work.title }}</h5>
-                            <a href="#" class="btn btn-primary">Voir l'oeuvre</a>
+        <div class="col-lg-4 pt-2 offset-1">
+            <h2>Dernières entrées</h2>
+            <div id="latestCreation" class="carousel slide" data-bs-touch="false" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for work in latestWork %}
+                        <div class="carousel-item {% if loop.first %} active {% endif %}">
+                            <div class="card h-100">
+                                <div class="ratio ratio-4x3">
+                                    <img src="{{ asset('images/work/' ~work.image) }}" class="card-img-top object-fit-cover" alt="{{ work.title }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ work.title }}</h5>
+                                    <a href="{{ path('app_work', {'slug': work.slug}) }}" class="btn btn-primary">Voir l'oeuvre</a>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 </section>
 {% endblock %}
