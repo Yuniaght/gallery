@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Gallery - {{ artist.firstName }} {{ artist.lastName }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold">{{ artist.firstName }} {{ artist.lastName }}</h1>
+                {% if artist.pseudonym %}
+                    <h2 class="text-muted h4 mb-3">{{ artist.pseudonym }}</h2>
+                {% endif %}
+                <p class="fs-5 text-secondary">
+                    {{ artist.dateOfBirth|date('Y') }} -
+                    {% if artist.dateOfDeath %}
+                        {{ artist.dateOfDeath|date('Y') }} ({{ artist.dateOfDeath.diff(artist.dateOfBirth).y }} ans)
+                    {% else %}
+                        Aujourd'hui ({{ date().diff(artist.dateOfBirth).y }} ans)
+                    {% endif %}
+                </p>
+                <div class="mt-4 lead">
+                    <p>{{ artist.description|nl2br }}</p>
+                </div>
+            </div>
+            <div class="col-lg-4 d-flex justify-content-center align-items-start">
+                <div class="ratio ratio-4x3 shadow-lg border border-3 border-dark p-1">
+                    <img src="{{ asset('images/artists/' ~ artist.image) }}"
+                         class="object-fit-cover w-100 h-100"
+                         alt="Portrait de {{ artist.firstName }}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <h2 class="display-6">Œuvres</h2>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-lg-3 g-4 mb-5">
+            {% for work in artist.works %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ asset('images/work/' ~ work.image) }}" class="card-img-top object-fit-cover" alt="{{ work.title }}">
+                        </div>
+                        <h3 class="card-header h5">{{ work.title }}</h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Œuvre de type : {{ work.category.name }}</li>
+                            <li class="list-group-item">
+                                <a href="{{ path('app_work', {'slug': work.slug}) }}" class="btn btn-outline-success w-100">Voir l'œuvre</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="alert alert-info">Cet artiste n'a pas encore d'œuvre enregistré.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

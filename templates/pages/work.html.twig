@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ work.title}}{% endblock %}
-
+{% block title %}{{ work.title }}{% endblock %}
 {% block body %}
+    {% set rating = work.averageRating %}
+    {% set percent = (rating / 5) * 100 %}
     <section class="container mt-2">
         <div class="row">
             <div class="col-md-8">
@@ -16,8 +17,25 @@
             <div class="col-md-4">
                 <h3>Informations sur l'œuvre</h3>
                 <p>Crée en {{ work.createdAt|date("Y") }}</p>
-                <p>{{ work.description }}</p>
+                <p>{{ work.description|nl2br }}</p>
                 <p>Technique utilisée : {{ work.technic.name }}</p>
+                {% if work.averageRating %}
+                    <p> Note moyenne des utilisateurs :</p>
+                    <div class="star-rating" title="Note : {{ rating }}/5">
+                        <div class="back-stars">
+                            {% for i in 1..5 %}
+                                <i class="icofont-star"></i>
+                            {% endfor %}
+                        </div>
+                        <div class="front-stars" style="width: {{ percent }}%">
+                            {% for i in 1..5 %}
+                                <i class="icofont-star"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Pas encore noté</p>
+                {% endif %}
                 {% if app.user %}
                     <button class="btn btn-outline-success">Ajouter aux favoris</button>
                 {% endif %}
@@ -37,20 +55,18 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-1">
-                        <img src="{{ asset('image/user/' ~comment.user.image) }}" class="img-fluid rounded-start" alt="{{ comment.user.image }}">
+                        <img src="{{ asset('images/user/' ~comment.user.image) }}" class="img-fluid rounded-start" alt="{{ comment.user.image }}">
                     </div>
                     <div class="col-md-11">
                         <div class="card-body">
                             <h5 class="card-title">{{ comment.user.userName }} - {{ comment.note }}/5</h5>
                             <p class="card-text">{{ comment.description }}</p>
-                            <p class="card-text"><small class="text-body-secondary">commenté le : {{ comment.publishedAt|date('d-m-Y')  }}</small></p>
+                            <p class="card-text"><small class="text-body-secondary">Commenté le : {{ comment.publishedAt|date('d-m-Y')  }}</small></p>
                         </div>
                     </div>
                 </div>
             </div>
             {% endif %}
         {% endfor %}
-        </div>
     </section>
-
 {% endblock %}

@@ -1,15 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PagesController!{% endblock %}
+{% block title %}Liste des Artistes{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/src/Controller/PagesController.php</code></li>
-            <li>Your template at <code>D:/Logiciel/Wamp64/www/Symfony/gallery/templates/pages/about.html.twig</code></li>
-        </ul>
+    <div class="container my-5">
+        <h1 class="mb-4">Artistes</h1>
+        <div class="row g-4">
+            {% for artist in artists %}
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100 overflow-hidden">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-4 position-relative" style="min-height: 200px;">
+                                <img src="{{ asset('images/artists/' ~ artist.image) }}"
+                                     class="img-fluid object-fit-cover w-100 h-100 position-absolute top-0 start-0"
+                                     alt="{{ artist.pseudonym }}">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body d-flex flex-column h-100 py-3">
+                                    <h5 class="card-title fw-bold text-secondary">
+                                        {{ artist.firstName }} {{ artist.lastName }}
+                                    </h5>
+                                    {% if artist.pseudonym %}
+                                        <h6 class="card-subtitle mb-2 text-muted fst-italic">
+                                            Dit : "{{ artist.pseudonym }}"
+                                        </h6>
+                                    {% endif %}
+                                    <p class="card-text small mb-2 text-secondary">
+                                        <i class="bi bi-hourglass-split"></i>
+                                        {{ artist.dateOfBirth|date('Y') }}
+                                        {% if artist.dateOfDeath %}
+                                            - {{ artist.dateOfDeath|date('Y') }}
+                                        {% else %}
+                                            (Actif)
+                                        {% endif %}
+                                    </p>
+                                    <div class="mt-auto text-end">
+                                        <a href="{{ path('app_artist', {'slug': artist.slug}) }}" class="btn btn-sm btn-outline-primary">Voir profil</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">Aucun artiste trouvé.</div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

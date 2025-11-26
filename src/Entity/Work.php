@@ -245,4 +245,24 @@ class Work
 
         return $this;
     }
+
+    public function getAverageRating(): ?float
+    {
+        $comments = $this->getComments();
+        if ($comments->isEmpty()) {
+            return null;
+        }
+        $total = 0;
+        $count = 0;
+        foreach ($comments as $comment) {
+            if ($comment->isPublic() === true) {
+                $total += $comment->getNote();
+                $count++;
+            }
+        }
+        if ($count === 0) {
+            return null;
+        }
+        return round($total / $count, 2);
+    }
 }

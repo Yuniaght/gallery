@@ -30,7 +30,30 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">S'identifier</button>
+                {% if not app.user %}
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">S'identifier</button>
+                {% else %}
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ asset('images/user/' ~ app.user.image) }}" alt="{{ app.user.image }}" class="img-menu"> {{ app.user.userName }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="" class="dropdown-item">Mon profil</a></li>
+                            <li><a href="" class="dropdown-item">Mes favoris</a></li>
+                            <li><a href="" class="dropdown-item">Modifier le profil</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="{{ path('app_logout') }}" class="dropdown-item">Se déconnecter</a></li>
+                            {% if is_granted('ROLE_MODERATEUR') %}
+                                <li class="dropdown-divider"></li>
+                                <li><a href="" class="dropdown-item">Commentaires</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="dropdown-divider"></li>
+                                <li><a href="" class="dropdown-item">Administration</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

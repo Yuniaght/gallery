@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
                  ->setLastName($faker->lastName())
                  ->setUsername($faker->userName())
                  ->setEmail($this->slugger->slug($user->getFirstName()). $this->slugger->slug($user->getLastName())."@" .$faker->domainName())
-                 ->setImage(rand(1,26).".jpg")
+                 ->setImage(rand(1,133).".png")
                  ->setPassword($this->hasher->hashPassword($user, "password"))
                  ->setIsActive($faker->boolean(80))
                  ->setJoinedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween("-3 years", "now")))

@@ -80,13 +80,13 @@
                                 <div class="ratio ratio-16x9">
                                     <img src="{{ asset('images/work/' ~work.image) }}" class="card-img-top object-fit-cover" alt="{{ work.title }}">
                                 </div>
-                                <h3 class="card-header">{{ work.title }}</h3>
+                                <h3 class="card-header cardTitleHeight d-flex align-items-center">{{ work.title }}</h3>
                                 <div class="card-body">
                                     <h5 class="card_title">Crée par : {{ work.artist.firstName }} {{ work.artist.lastName }} en {{ work.createdAt|date('Y') }}</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Œuvre de type : {{ work.category.name }}</li>
-                                    <li class="list-group-item"><a href="{{ path('app_work', {'slug': work.slug}) }}" class="btn btn-outline-success">Lire la suite</a></li>
+                                    <li class="list-group-item"><a href="{{ path('app_work', {'slug': work.slug}) }}" class="btn btn-outline-success">Voir l'œuvre</a></li>
                                 </ul>
                             </div>
                         </div>

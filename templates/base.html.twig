@@ -23,6 +23,6 @@
         <footer class="bg-primary container-fluid">
             {% include 'partials/footer.html.twig' %}
         </footer>
-        {% include 'partials/loginModal.html.twig' %}
+        {{ render(controller('App\\Controller\\SecurityController::login')) }}
     </body>
 </html>
