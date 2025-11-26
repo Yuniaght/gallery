@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Message envoyé{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 text-center">
+                    <div class="card-header bg-primary text-white py-3 border-0">
+                        <h5 class="mb-0 fw-light text-uppercase ls-1">Contact</h5>
+                    </div>
+                    <div class="card-body p-5">
+                        <h1 class="h3 card-title mb-3">Message envoyé !</h1>
+                        <p class="lead text-muted mb-4">
+                            Merci de nous avoir contactés.
+                        </p>
+                        <div class="card-text mb-5 text-muted">
+                            <p>Nous avons bien reçu votre demande. Notre équipe reviendra vers vous dans les plus brefs délais (généralement sous 24 à 48 heures).</p>
+                            <p class="small fst-italic">Un email de confirmation vous a été envoyé.</p>
+                        </div>
+                        <div class="d-grid gap-2 col-sm-8 mx-auto">
+                            <a href="{{ path('app_home') }}" class="btn btn-outline-success">
+                                Retour à l'accueil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
