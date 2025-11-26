@@ -4,7 +4,10 @@
 {% block body %}
     {% set rating = work.averageRating %}
     {% set percent = (rating / 5) * 100 %}
+    {% set isFavorite = app.user in work.favorite %}
+
     <section class="container mt-2">
+        {% include 'partials/flash.html.twig' %}
         <div class="row">
             <div class="col-md-8">
                 <h2>{{ work.title }} - <a href="{{ path('app_artist', {'slug': work.artist.slug}) }}">{{ work.artist.firstName }} {{ work.artist.lastName }}</a></h2>
@@ -37,17 +40,35 @@
                     <p class="text-muted">Pas encore noté</p>
                 {% endif %}
                 {% if app.user %}
-                    <button class="btn btn-outline-success">Ajouter aux favoris</button>
+                    <div class="pt-2">
+                        <a href="{{ path('app_addToFavorite', {'slug': work.slug}) }}" class="btn btn-outline-success">
+                            {{ isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
     </section>
     <section class="container mt-2">
-        <div class="row">
-            {% if app.user%}
-            placeholder comment form
+        <div class="row my-3">
+            {% if not app.user %}
+                <div class="text-center">
+                    <h5>Connectez-vous</h5>
+                    <p class="small">Vous devez être connecté pour laisser un avis.</p>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">S'identifier</button>
+                </div>
+
+            {% elseif user_has_commented %}
+                <div class="text-center text-success">
+                    <i class="icofont-check-circled fs-1"></i>
+                    <h5 class="mt-2">Merci !</h5>
+                    <p>Vous avez déjà donné votre avis sur cette œuvre.</p>
+                </div>
+
             {% else %}
-            <h2 class="text-center">Vous devez être connecté pour laisser un commentaire</h2>
+                <div class="text-center py-5 border border-dashed rounded bg-white">
+                    <p class="text-muted">Le formulaire de commentaire s'affichera ici.</p>
+                </div>
             {% endif %}
         </div>
         {% for comment in work.comments %}
@@ -69,4 +90,5 @@
             {% endif %}
         {% endfor %}
     </section>
+
 {% endblock %}

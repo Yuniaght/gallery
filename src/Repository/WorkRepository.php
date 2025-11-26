@@ -31,4 +31,15 @@ class WorkRepository extends ServiceEntityRepository
             ->setParameter('category', $category)
             ->orderBy('works.createdAt', 'DESC');
     }
+
+    public function UserFavoriteWork(string $userName)
+    {
+        return $this->createQueryBuilder('works')
+            ->join('works.favorite', 'user')
+            ->andWhere('user.userName = :val')
+            ->setParameter('val', $userName)
+            ->orderBy('works.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

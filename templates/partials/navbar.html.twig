@@ -38,12 +38,12 @@
                             <img src="{{ asset('images/user/' ~ app.user.image) }}" alt="{{ app.user.image }}" class="img-menu"> {{ app.user.userName }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="" class="dropdown-item">Mon profil</a></li>
-                            <li><a href="" class="dropdown-item">Mes favoris</a></li>
+                            <li><a href="{{ path('app_user_profile') }}" class="dropdown-item">Mon profil</a></li>
+                            <li><a href="{{ path('app_favorites') }}" class="dropdown-item">Mes favoris</a></li>
                             <li><a href="" class="dropdown-item">Modifier le profil</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a href="{{ path('app_logout') }}" class="dropdown-item">Se déconnecter</a></li>
-                            {% if is_granted('ROLE_MODERATEUR') %}
+                            {% if is_granted('ROLE_MODERATOR') %}
                                 <li class="dropdown-divider"></li>
                                 <li><a href="" class="dropdown-item">Commentaires</a></li>
                             {% endif %}

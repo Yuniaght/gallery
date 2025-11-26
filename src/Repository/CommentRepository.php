@@ -16,6 +16,19 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function findCommentsMadeByUser(string $userName): array
+    {
+        return $this->createQueryBuilder('comments')
+            ->join('comments.work', 'work')
+            ->addSelect('work')
+            ->join('comments.user', 'user')
+            ->andWhere('user.userName = :val')
+            ->setParameter('val', $userName)
+            ->orderBy('comments.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Comment[] Returns an array of Comment objects
     //     */

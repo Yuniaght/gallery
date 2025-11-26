@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Favoris{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="d-flex align-items-center mb-4">
+            <h1 class="display-6 me-3">Mes Favoris</h1>
+        </div>
+        <div class="row row-cols-1 row-cols-lg-3 g-4 mb-5">
+            {% for work in favorites %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ asset('images/work/' ~ work.image) }}" class="card-img-top object-fit-cover" alt="{{ work.title }}">
+                        </div>
+                        <h3 class="card-header cardTitleHeight d-flex align-items-center h5">
+                            {{ work.title }}
+                        </h3>
+                        <div class="card-body">
+                            <h5 class="card-title h6 text-muted">
+                                Crée par : {{ work.artist.firstName }} {{ work.artist.lastName }} en {{ work.createdAt|date('Y') }}
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Œuvre de type : {{ work.category.name }}</li>
+                            <li class="list-group-item d-flex gap-2">
+                                <a href="{{ path('app_work', {'slug': work.slug}) }}" class="btn btn-outline-success flex-grow-1">
+                                    Voir l'œuvre
+                                </a>
+                                <a href="{{ path('app_addToFavorite', {'slug': work.slug}) }}"
+                                   class="btn btn-danger"
+                                   title="Retirer des favoris"
+                                   onclick="return confirm('Voulez-vous retirer cette œuvre de vos favoris ?');">
+                                    <i class="icofont-trash"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <i class="icofont-heart-alt display-1 text-muted opacity-25"></i>
+                    <h3 class="mt-3 text-muted">Vous n'avez pas encore de favoris.</h3>
+                    <a href="{{ path('app_gallery') }}" class="btn btn-primary mt-3">Explorer la galerie</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

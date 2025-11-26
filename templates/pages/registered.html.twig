@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription réussie{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 text-center">
+                    <div class="card-body p-5">
+                        <h1 class="h3 card-title mb-3">Vérifiez votre boîte de réception</h1>
+                        <p class="card-text text-muted mb-4">
+                            Nous avons envoyé un email de confirmation.
+                        </p>
+                        <div class="alert alert-info border-0 bg-info bg-opacity-10 mb-4">
+                            <i class="icofont-info-circle me-2"></i>
+                            Cliquez sur le lien contenu dans cet email pour activer pleinement votre compte et pouvoir poster des commentaires.
+                        </div>
+                        <p class="small text-muted">
+                            Vous n'avez rien reçu ? Vérifiez vos spams ou
+                            <a href="{{ path('app_verify_resend_email', {'id': userId}) }}" class="text-decoration-none">cliquez ici pour renvoyer le lien</a>.
+                        </p>
+                        <div class="mt-4">
+                            <a href="{{ path('app_home') }}" class="btn btn-outline-primary">
+                                Retourner à l'accueil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

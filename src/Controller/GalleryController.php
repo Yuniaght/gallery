@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\WorkRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,11 +39,23 @@ final class GalleryController extends AbstractController
     }
 
     #[Route('/gallery/view/{slug:slug}', name: 'app_work')]
-    public function works(WorkRepository $work,array $slug): Response
+    public function works(WorkRepository $work,CommentRepository $comment,array $slug): Response
     {
+        $user = $this->getUser();
+        $userHasCommented = false;
         $work = $work->findOneBy(['slug' => $slug]);
+        if ($user) {
+            $hasCommented = $comment->findOneBy([
+                'work' => $work,
+                'user' => $user
+            ]);
+            if ($hasCommented) {
+                $userHasCommented = true;
+            }
+        }
         return $this->render('pages/work.html.twig', [
             'work' => $work,
+            'user_has_commented' => $userHasCommented,
         ]);
     }
 }

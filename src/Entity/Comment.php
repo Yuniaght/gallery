@@ -5,8 +5,15 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_USER_WORK_COMMENT', columns: ['user_id', 'work_id'])]
+#[UniqueEntity(
+    fields: ['user', 'work'],
+    message: 'Vous avez déjà donné votre avis sur cette œuvre.',
+    errorPath: 'description'
+)]
 class Comment
 {
     #[ORM\Id]

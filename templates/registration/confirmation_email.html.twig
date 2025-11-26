@@ -1,0 +1,19 @@
+{% block stylesheets %}{% endblock %}
+{% block body %}
+<section class="container">
+    <div class="row">
+        <h1 class="logo titlebig">Gallery</h1>
+        <h2>Bonjour, merci de confirmer votre compte</h2>
+
+        <p>
+            Confirmer votre compte en cliquant sur le lien suivant : <br><br>
+            <a href="{{ signedUrl|raw }}" class="btn-outline-success">Confimer mon compte</a>.
+            Ce lien expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+        </p>
+
+        <p>
+            Merci de nous rejoindre
+        </p>
+    </div>
+</section>
+{% endblock %}

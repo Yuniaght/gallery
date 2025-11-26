@@ -38,6 +38,7 @@ class UserFixtures extends Fixture
                  ->setIsActive($faker->boolean(80))
                  ->setJoinedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween("-3 years", "now")))
                  ->setEditedAt(new \DateTimeImmutable())
+                 ->setIsVerified($faker->boolean(95))
                  ->setRoles(["ROLE_USER"]);
             $manager->persist($user);
         }

@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row align-items-center mb-5 border-bottom pb-4">
+            <div class="col-auto">
+                <div class="ratio ratio-1x1 overflow-hidden shadow-sm" style="width: 120px;">
+                        <img src="{{ asset('images/user/' ~ app.user.image) }}" class="object-fit-cover" alt="{{ app.user.userName }}">
+                </div>
+            </div>
+            <div class="col">
+                <h1 class="display-6 fw-bold mb-1">
+                    {{ app.user.firstName }} {{ app.user.lastName }}
+                </h1>
+                <p class="text-muted fs-5 mb-0">@{{ app.user.userName }}</p>
+            </div>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <h2 class="h4 text-success mb-4 border-bottom pb-2">Mes informations</h2>
+                <div class="mb-4">
+                    <label class="small fw-bold text-uppercase">Prénom & Nom</label>
+                    <div class="fs-5">{{ app.user.firstName }} {{ app.user.lastName }}</div>
+                </div>
+                <div class="mb-4">
+                    <label class="small fw-bold text-uppercase">Nom d'utilisateur</label>
+                    <div class="fs-5">@{{ app.user.userName }}</div>
+                </div>
+                <div class="mb-4">
+                    <label class="small fw-bold text-uppercase">Email</label>
+                    <div class="fs-5">{{ app.user.email }}</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="small fw-bold text-uppercase">Membre depuis le</label>
+                    <div class="fs-5">
+                        {{ app.user.joinedAt|date('d/m/Y') }}
+                        <small class="text-muted">({{ app.user.joinedAt|date('H:i') }})</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="h4 text-success mb-4 border-bottom pb-2">Mon tableau de bord</h2>
+                <div class="d-grid gap-3">
+                    <div class="btn-group-vertical w-100 shadow-sm" role="group">
+                        <a href="{{ path('app_favorites') }}" class="btn btn-lg btn-dark text-start d-flex justify-content-between align-items-center p-3">
+                        <span>
+                            <i class="icofont-heart-alt text-danger me-2"></i> Mes favoris
+                        </span>
+                            <i class="icofont-simple-right text-muted"></i>
+                        </a>
+
+                        <a href="{{ path('app_comments') }}" class="btn btn-lg btn-dark text-start d-flex justify-content-between align-items-center p-3">
+                        <span>
+                            {# Icofont Comment #}
+                            <i class="icofont-comment text-info me-2"></i> Mes commentaires
+                        </span>
+                            <span class="badge bg-secondary rounded-pill">{{ app.user.comments|length }}</span>
+                        </a>
+                    </div>
+                    <div class="mt-2">
+                        <p class="small text-muted fw-bold text-uppercase mb-2">Paramètres</p>
+                        <a href="#" class="btn btn-outline-info w-100 mb-2 text-start">
+                            <i class="icofont-ui-edit me-2"></i> Modifier mes infos
+                        </a>
+                        <a href="#" class="btn btn-outline-warning w-100 mb-2 text-start">
+                            <i class="icofont-key me-2"></i> Modifier mon mot de passe
+                        </a>
+                    </div>
+                    {% if not is_granted('ROLE_MODERATOR') %}
+                    <div class="mt-2">
+                        <a href="#" class="btn btn-outline-danger w-100 text-start" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
+                            <i class="icofont-trash me-2"></i> Clôturer mon compte
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
