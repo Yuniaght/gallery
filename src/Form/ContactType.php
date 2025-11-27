@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Class\Contact;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -29,6 +31,21 @@ class ContactType extends AbstractType
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'Votre message',
+            ])
+            ->add('recaptcha', EWZRecaptchaType::class, [
+                'attr' => [
+                    'options' => [
+                        'theme' => 'dark',
+                        'type' => 'image',
+                        'defer' => true,
+                        'async' => true,
+                        'size' => 'normal',
+                    ]
+                ],
+                'mapped' => false,
+                'constraints' => [
+                    new RecaptchaTrue()
+                ]
             ])
         ;
     }

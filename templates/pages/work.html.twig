@@ -58,6 +58,13 @@
                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">S'identifier</button>
                 </div>
 
+            {% elseif comment_pending %}
+                <div class="text-center text-warning">
+                    <i class="icofont-clock-time icofont-2x"></i>
+                    <h5 class="mt-2">Merci !</h5>
+                    <p>Votre commentaire est en attente d'approbation.</p>
+                </div>
+
             {% elseif user_has_commented %}
                 <div class="text-center text-success">
                     <i class="icofont-check-circled fs-1"></i>

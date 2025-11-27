@@ -1,15 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactController!{% endblock %}
-
+{% block title %}Gallery - Contact{% endblock %}
+{% form_theme form '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig' %}
 {% block body %}
     <section class="row">
         <div class="col-md-6 offset-3">
             <h2 class="display-5 my-4">Nous contacter</h2>
             {{ form_start(form) }}
-            {{ form_widget(form) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.subject) }}
+            {{ form_row(form.message) }}
+            {{ form_row(form.recaptcha) }}
             <input type="submit" value="Envoyer le message" class="btn btn-outline-success">
             {{ form_end(form) }}
         </div>
     </section>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
+

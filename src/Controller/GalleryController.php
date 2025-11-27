@@ -43,6 +43,7 @@ final class GalleryController extends AbstractController
     {
         $user = $this->getUser();
         $userHasCommented = false;
+        $commentPending = true;
         $work = $work->findOneBy(['slug' => $slug]);
         if ($user) {
             $hasCommented = $comment->findOneBy([
@@ -51,11 +52,14 @@ final class GalleryController extends AbstractController
             ]);
             if ($hasCommented) {
                 $userHasCommented = true;
+                if ($hasCommented->isPublic())
+                    $commentPending = false;
             }
         }
         return $this->render('pages/work.html.twig', [
             'work' => $work,
             'user_has_commented' => $userHasCommented,
+            'comment_pending' => $commentPending
         ]);
     }
 }

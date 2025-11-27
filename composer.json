@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-migrations-bundle": "^3.6",
         "doctrine/orm": "^3.5",
+        "excelwebzone/recaptcha-bundle": "^1.5",
         "fakerphp/faker": "^1.24",
         "knplabs/knp-paginator-bundle": "^6.9",
         "phpdocumentor/reflection-docblock": "^5.6",

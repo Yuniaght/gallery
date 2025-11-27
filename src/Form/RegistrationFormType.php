@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -82,6 +84,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'J\'accepte les termes',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -89,6 +92,21 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+        ->add('recaptcha', EWZRecaptchaType::class, [
+        'attr' => [
+            'options' => [
+                'theme' => 'dark',
+                'type' => 'image',
+                'defer' => true,
+                'async' => true,
+                'size' => 'normal',
+            ]
+        ],
+        'mapped' => false,
+        'constraints' => [
+            new RecaptchaTrue()
+        ]
+    ])
         ;
     }
 
