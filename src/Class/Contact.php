@@ -4,7 +4,7 @@ namespace App\Class;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Contact
+final class Contact
 {
     #[Assert\NotBlank]
     private string $firstName;
