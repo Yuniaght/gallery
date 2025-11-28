@@ -8,10 +8,10 @@
             <ul class="navbar-nav mx-auto">
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="">Panneau Administration</a>
+                    <a class="nav-link" href="{{ path('app_admin_panel')}}">Panneau Administration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Artistes</a>
+                    <a class="nav-link" href="{{ path('app_artists_panel') }}">Artistes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Oeuvres</a>

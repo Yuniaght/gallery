@@ -1,0 +1,63 @@
+{% extends 'pages/admin/base.html.twig' %}
+
+{% block title %}Gallery - Panel Artiste{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <section class="row">
+            <div class="col-md-9 offset-1">
+                <h1 class="display-4 pb-4">Liste des artistes</h1>
+                <a href="" class="btn btn-outline-primary">Nouvel artiste</a>
+            </div>
+        </section>
+        <section>
+            <div class="row" data-controller="datatable" data-order-index="6" data-order-order="desc" id="artistTable">
+                <table class="table table-hover display pt-3" >
+                    <thead>
+                    <tr>
+                        <th scope="col" class="adminThumbnail" data-dt-order="disable">Image</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Pseudonyme</th>
+                        <th scope="col">Date de naissance</th>
+                        <th scope="col">Date de décès</th>
+                        <th scope="col">Ajouté le</th>
+                        <th scope="col">Mis à jour le</th>
+                        <th scope="col" colspan="2" data-dt-order="disable">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for artist in artists %}
+                        <tr>
+                            <td class="adminThumbnail"><img src="{{ asset('images/artists/' ~artist.image) }}" class="img-fluid" alt="{{ artist.pseudonym }}"></td>
+                            <td>{{ artist.firstName }}</td>
+                            <td>{{ artist.lastName }}</td>
+                            <td>{{ artist.pseudonym }}</td>
+                            <td>{{ artist.dateOfBirth|date('d/m/Y') }}</td>
+                            <td>
+                                {% if artist.dateOfDeath %}
+                                    {{ artist.dateOfDeath|date('d/m/Y') }}
+                                {% else %}
+                                    Encore en vie
+                                {% endif %}
+                            </td>
+                            <td>{{ artist.addedAt|date('d/m/Y') }}</td>
+                            <td>{{ artist.editedAt|date('d/m/Y') }}</td>
+                            <td>
+                                <a href="" class="btn btn-sm btn-outline-primary">
+                                    <i class="icofont-ui-delete"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-sm btn-outline-primary">
+                                    <i class="icofont-ui-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}

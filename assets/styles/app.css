@@ -39,6 +39,10 @@
     width: 0;
 }
 
+.adminThumbnail {
+    width: 40px;
+}
+
 .img-menu {
     width: 40px;
     border-radius: 50%;
