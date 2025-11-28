@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" href="{{ asset('images/favicon.png') }}">
+        {% block stylesheets %}
+        {% endblock %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Meie+Script&display=swap" rel="stylesheet">
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        {% include '/partials/flash.html.twig' %}
+        <header>
+            {% include 'pages/admin/partials/navbar.html.twig' %}
+        </header>
+        <main class="flex-grow-1">
+            {% block body %}{% endblock %}
+        </main>
+    </body>
+</html>
