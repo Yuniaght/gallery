@@ -1,0 +1,25 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        user:
+            uri_prefix: /images/user
+            delete_on_update: false
+            delete_on_remove: false
+            upload_destination: '%kernel.project_dir%/public/images/user'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        work:
+            uri_prefix: /images/work
+            upload_destination: '%kernel.project_dir%/public/images/work'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        artist:
+            uri_prefix: /images/artists
+            upload_destination: '%kernel.project_dir%/public/images/artists'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
+    #        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

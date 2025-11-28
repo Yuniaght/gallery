@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header border-bottom py-3">
+                        <h1 class="h4 mb-0"><i class="icofont-ui-edit text-primary"></i> Modifier mes informations</h1>
+                    </div>
+                    <div class="card-body p-4">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-primary px-4">
+                                Enregistrer les modifications
+                            </button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

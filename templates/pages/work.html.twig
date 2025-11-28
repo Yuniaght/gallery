@@ -7,7 +7,6 @@
     {% set isFavorite = app.user in work.favorite %}
 
     <section class="container mt-2">
-        {% include 'partials/flash.html.twig' %}
         <div class="row">
             <div class="col-md-8">
                 <h2>{{ work.title }} - <a href="{{ path('app_artist', {'slug': work.artist.slug}) }}">{{ work.artist.firstName }} {{ work.artist.lastName }}</a></h2>

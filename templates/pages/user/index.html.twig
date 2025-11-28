@@ -32,7 +32,6 @@
                     <label class="small fw-bold text-uppercase">Email</label>
                     <div class="fs-5">{{ app.user.email }}</div>
                 </div>
-
                 <div class="mb-4">
                     <label class="small fw-bold text-uppercase">Membre depuis le</label>
                     <div class="fs-5">
@@ -51,10 +50,8 @@
                         </span>
                             <i class="icofont-simple-right text-muted"></i>
                         </a>
-
                         <a href="{{ path('app_comments') }}" class="btn btn-lg btn-dark text-start d-flex justify-content-between align-items-center p-3">
                         <span>
-                            {# Icofont Comment #}
                             <i class="icofont-comment text-info me-2"></i> Mes commentaires
                         </span>
                             <span class="badge bg-secondary rounded-pill">{{ app.user.comments|length }}</span>
@@ -62,7 +59,7 @@
                     </div>
                     <div class="mt-2">
                         <p class="small text-muted fw-bold text-uppercase mb-2">Paramètres</p>
-                        <a href="#" class="btn btn-outline-info w-100 mb-2 text-start">
+                        <a href="{{ path('app_change_info') }}" class="btn btn-outline-info w-100 mb-2 text-start">
                             <i class="icofont-ui-edit me-2"></i> Modifier mes infos
                         </a>
                         <a href="{{ path('app_change_password') }}" class="btn btn-outline-warning w-100 mb-2 text-start">
@@ -71,9 +68,12 @@
                     </div>
                     {% if not is_granted('ROLE_MODERATOR') %}
                     <div class="mt-2">
-                        <a href="#" class="btn btn-outline-danger w-100 text-start" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
-                            <i class="icofont-trash me-2"></i> Clôturer mon compte
-                        </a>
+                        <form method="post" action="{{ path('app_delete_account') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete_account') }}">
+                            <button type="submit" class="btn btn-outline-danger w-100 text-start">
+                                <i class="icofont-trash me-2"></i> Clôturer mon compte
+                            </button>
+                        </form>
                     </div>
                     {% endif %}
                 </div>
