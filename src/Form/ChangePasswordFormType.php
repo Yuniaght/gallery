@@ -7,52 +7,46 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
 
-class ChangePasswordType extends AbstractType
+class ChangePasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('currentPassword', PasswordType::class, [
-                'mapped' => false,
-                'label' => 'Mot de passe actuel',
-                'attr' => ['autocomplete' => 'current-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer votre mot de passe actuel',
-                    ]),
-                    new UserPassword([
-                        'message' => 'Mot de passe actuel incorrect.',
-                    ]),
-                ],
-            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'mapped' => false,
+                'options' => [
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
+                ],
                 'first_options' => [
-                    'label' => 'Nouveau mot de passe',
-                    'attr' => ['autocomplete' => 'new-password'],
                     'constraints' => [
-                        new NotBlank(['message' => 'Entrez un mot de passe']),
+                        new NotBlank([
+                            'message' => 'Veuillez renseigner un mot de passe',
+                        ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
+                            'minMessage' => 'Votre mot de passe doit être de {{ limit }} caractères',
+                            // max length allowed by Symfony for security reasons
                             'max' => 4096,
                         ]),
                         new PasswordStrength(),
                         new NotCompromisedPassword(),
                     ],
+                    'label' => 'Nouveau mot de passe',
                 ],
                 'second_options' => [
-                    'label' => 'Confirmer le nouveau mot de passe',
-                    'attr' => ['autocomplete' => 'new-password'],
+                    'label' => 'Répétez le mot de passe',
                 ],
-                'invalid_message' => 'Les deux mots de passe doivent être identiques.',
+                'invalid_message' => 'Les mots de passe doivent être identiques.',
+                // Instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'mapped' => false,
             ])
         ;
     }

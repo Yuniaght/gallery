@@ -1,0 +1,9 @@
+<h1>Bonjour utilisateur</h1>
+
+<p>Pour remettre à zero votre mot de passe, suivez le lien suivant : </p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>Bonne journée!</p>
