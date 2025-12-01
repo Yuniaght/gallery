@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -27,6 +28,18 @@ class CommentRepository extends ServiceEntityRepository
             ->orderBy('comments.publishedAt', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function hideAllCommentsByUser(User $user): void
+    {
+        $this->createQueryBuilder('c')
+            ->update()
+            ->set('c.isPublic', ':status')
+            ->where('c.user = :user')
+            ->setParameter('status', false)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->execute();
     }
 
     //    /**

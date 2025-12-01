@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
+#[Vich\Uploadable]
 class Artist
 {
     #[ORM\Id]
@@ -46,12 +49,15 @@ class Artist
     /**
      * @var Collection<int, Work>
      */
-    #[ORM\OneToMany(targetEntity: Work::class, mappedBy: 'artist')]
+
+    #[ORM\OneToMany(targetEntity: Work::class, mappedBy: 'artist', cascade: ['remove'])]
     private Collection $works;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[Vich\UploadableField(mapping: 'artist', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
     public function __construct()
     {
         $this->works = new ArrayCollection();
@@ -151,7 +157,7 @@ class Artist
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?string $image): static
     {
         $this->image = $image;
 
@@ -210,5 +216,19 @@ class Artist
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile !== null) {
+            $this->setEditedAt(new \DateTimeImmutable());
+        }
     }
 }

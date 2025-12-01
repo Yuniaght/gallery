@@ -7,11 +7,11 @@
         <section class="row">
             <div class="col-md-9 offset-1">
                 <h1 class="display-4 pb-4">Liste des artistes</h1>
-                <a href="" class="btn btn-outline-primary">Nouvel artiste</a>
+                <a href="{{ path('app_new_artist') }}" class="btn btn-outline-primary">Nouvel artiste</a>
             </div>
         </section>
         <section>
-            <div class="row" data-controller="datatable" data-order-index="6" data-order-order="desc" id="artistTable">
+            <div class="row" data-controller="datatable" data-order-index="6" data-order-dir="desc" id="artistTable">
                 <table class="table table-hover display pt-3" >
                     <thead>
                     <tr>
@@ -33,23 +33,25 @@
                             <td>{{ artist.firstName }}</td>
                             <td>{{ artist.lastName }}</td>
                             <td>{{ artist.pseudonym }}</td>
-                            <td>{{ artist.dateOfBirth|date('d/m/Y') }}</td>
-                            <td>
+                            <td data-order="{{ artist.dateOfBirth|date('Y-m-d') }}">{{ artist.dateOfBirth|date('d/m/Y') }}</td>
+                            <td data-order="{{ artist.dateOfDeath|date('Y-m-d') }}">
                                 {% if artist.dateOfDeath %}
                                     {{ artist.dateOfDeath|date('d/m/Y') }}
                                 {% else %}
                                     Encore en vie
                                 {% endif %}
                             </td>
-                            <td>{{ artist.addedAt|date('d/m/Y') }}</td>
-                            <td>{{ artist.editedAt|date('d/m/Y') }}</td>
+                            <td data-order="{{ artist.addedAt|date('Y-m-d') }}">{{ artist.addedAt|date('d/m/Y') }}</td>
+                            <td data-order="{{ artist.editedAt|date('Y-m-d') }}">{{ artist.editedAt|date('d/m/Y') }}</td>
                             <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
-                                    <i class="icofont-ui-delete"></i>
-                                </a>
+                                <form method="post" action="{{ path('app_delete_artist', {'id': artist.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet artiste ? Cette action est irréversible.');">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <i class="icofont-ui-delete"></i>
+                                    </button>
+                                </form>
                             </td>
                             <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ path('app_edit_artist', {'id': artist.id}) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="icofont-ui-edit"></i>
                                 </a>
                             </td>

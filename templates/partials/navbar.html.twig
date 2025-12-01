@@ -45,7 +45,7 @@
                             <li><a href="{{ path('app_logout') }}" class="dropdown-item">Se déconnecter</a></li>
                             {% if is_granted('ROLE_MODERATOR') %}
                                 <li class="dropdown-divider"></li>
-                                <li><a href="" class="dropdown-item">Commentaires</a></li>
+                                <li><a href="{{ path('app_comments_panel') }}" class="dropdown-item">Commentaires</a></li>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
                                 <li class="dropdown-divider"></li>

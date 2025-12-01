@@ -1,52 +1,29 @@
 {% extends 'pages/admin/base.html.twig' %}
 
-{% block title %}Gallery - Panel Oeuvres{% endblock %}
+{% block title %}Gallery - Panel Catégories{% endblock %}
 
 {% block body %}
     <main class="container">
         <section class="row">
             <div class="col-md-9 offset-1">
-                <h1 class="display-4 pb-4">Liste des œuvres</h1>
-                <a href="" class="btn btn-outline-primary">Nouvelle oeuvre</a>
+                <h1 class="display-4 pb-4">Liste des catégories</h1>
+                <a href="{{ path("app_new_category") }}" class="btn btn-outline-primary">Nouvelle catégories</a>
             </div>
         </section>
         <section>
-            <div class="row" data-controller="datatable" data-order-index="6" data-order-order="desc" id="artistTable">
+            <div class="row" data-controller="datatable" data-order-index="0" data-order-dir="asc" id="categoryTable">
                 <table class="table table-hover display pt-3" >
                     <thead>
                     <tr>
-                        <th scope="col" class="adminThumbnail" data-dt-order="disable">Image</th>
-                        <th scope="col">Titre</th>
-                        <th scope="col">Catégorie</th>
-                        <th scope="col">Technique</th>
-                        <th scope="col">Artiste</th>
-                        <th scope="col">Crée le</th>
-                        <th scope="col">Ajouté le</th>
-                        <th scope="col">Mis à jour le</th>
-                        <th scope="col" colspan="2" data-dt-order="disable">Actions</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Nombre d'oeuvre</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for work in works %}
+                    {% for cat in category %}
                         <tr>
-                            <td class="adminThumbnail"><img src="{{ asset('images/work/' ~work.image) }}" class="img-fluid" alt="{{ work.title }}"></td>
-                            <td>{{ work.title }}</td>
-                            <td>{{ work.category.name }}</td>
-                            <td>{{ work.technic.name }}</td>
-                            <td>{{ work.artist.pseudonym }}</td>
-                            <td>{{ work.createdAt|date('d/m/Y') }}</td>
-                            <td>{{ work.addedAt|date('d/m/Y') }}</td>
-                            <td>{{ work.editedAt|date('d/m/Y') }}</td>
-                            <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
-                                    <i class="icofont-ui-delete"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
-                                    <i class="icofont-ui-edit"></i>
-                                </a>
-                            </td>
+                            <td>{{ cat.name }}</td>
+                            <td>{{ cat.works|length }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

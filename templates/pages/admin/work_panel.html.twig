@@ -7,11 +7,11 @@
         <section class="row">
             <div class="col-md-9 offset-1">
                 <h1 class="display-4 pb-4">Liste des œuvres</h1>
-                <a href="" class="btn btn-outline-primary">Nouvelle oeuvre</a>
+                <a href="{{ path('app_new_work') }}" class="btn btn-outline-primary">Nouvelle oeuvre</a>
             </div>
         </section>
         <section>
-            <div class="row" data-controller="datatable" data-order-index="6" data-order-order="desc" id="artistTable">
+            <div class="row" data-controller="datatable" data-order-index="6" data-order-dir="desc" id="workTable">
                 <table class="table table-hover display pt-3" >
                     <thead>
                     <tr>
@@ -34,16 +34,16 @@
                             <td>{{ work.category.name }}</td>
                             <td>{{ work.technic.name }}</td>
                             <td>{{ work.artist.pseudonym }}</td>
-                            <td>{{ work.createdAt|date('d/m/Y') }}</td>
-                            <td>{{ work.addedAt|date('d/m/Y') }}</td>
-                            <td>{{ work.editedAt|date('d/m/Y') }}</td>
+                            <td data-order="{{ work.createdAt|date('Y-m-d') }}">{{ work.createdAt|date('d/m/Y') }}</td>
+                            <td data-order="{{ work.addedAt|date('Y-m-d') }}">{{ work.addedAt|date('d/m/Y') }}</td>
+                            <td data-order="{{ work.editedAt|date('Y-m-d') }}">{{ work.editedAt|date('d/m/Y') }}</td>
                             <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ path('app_delete_work', {'id' : work.id}) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="icofont-ui-delete"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ path('app_edit_work', {'id' : work.id}) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="icofont-ui-edit"></i>
                                 </a>
                             </td>

@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: WorkRepository::class)]
+#[Vich\Uploadable]
 class Work
 {
     #[ORM\Id]
@@ -61,6 +64,9 @@ class Work
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[Vich\UploadableField(mapping: 'work', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+
     public function __construct()
     {
         $this->favorite = new ArrayCollection();
@@ -89,7 +95,7 @@ class Work
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?string $image): static
     {
         $this->image = $image;
 
@@ -264,5 +270,19 @@ class Work
             return null;
         }
         return round($total / $count, 2);
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile !== null) {
+            $this->setEditedAt(new \DateTimeImmutable());
+        }
     }
 }

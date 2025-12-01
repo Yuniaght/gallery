@@ -1,52 +1,73 @@
 {% extends 'pages/admin/base.html.twig' %}
 
-{% block title %}Gallery - Panel Oeuvres{% endblock %}
+{% block title %}Gallery - Panel Utilisateur{% endblock %}
 
 {% block body %}
     <main class="container">
         <section class="row">
             <div class="col-md-9 offset-1">
-                <h1 class="display-4 pb-4">Liste des œuvres</h1>
-                <a href="" class="btn btn-outline-primary">Nouvelle oeuvre</a>
+                <h1 class="display-4 pb-4">Liste des utilisateurs</h1>
             </div>
         </section>
         <section>
-            <div class="row" data-controller="datatable" data-order-index="6" data-order-order="desc" id="artistTable">
+            <div class="row" data-controller="datatable" data-order-index="5" data-order-dir="desc" id="artistTable">
                 <table class="table table-hover display pt-3" >
                     <thead>
                     <tr>
                         <th scope="col" class="adminThumbnail" data-dt-order="disable">Image</th>
-                        <th scope="col">Titre</th>
-                        <th scope="col">Catégorie</th>
-                        <th scope="col">Technique</th>
-                        <th scope="col">Artiste</th>
-                        <th scope="col">Crée le</th>
-                        <th scope="col">Ajouté le</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Nom d'utilisateur</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">A rejoint le</th>
                         <th scope="col">Mis à jour le</th>
-                        <th scope="col" colspan="2" data-dt-order="disable">Actions</th>
+                        <th scope="col">Est actif</th>
+                        <th scope="col">Est vérifié</th>
+                        <th scope="col">Nombre de commentaire</th>
+                        <th scope="col" colspan="3" data-dt-order="disable">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for work in works %}
+                    {% for user in users %}
+                        {% set is_staff = 'ROLE_ADMIN' in user.roles or 'ROLE_MODERATOR' in user.roles %}
                         <tr>
-                            <td class="adminThumbnail"><img src="{{ asset('images/work/' ~work.image) }}" class="img-fluid" alt="{{ work.title }}"></td>
-                            <td>{{ work.title }}</td>
-                            <td>{{ work.category.name }}</td>
-                            <td>{{ work.technic.name }}</td>
-                            <td>{{ work.artist.pseudonym }}</td>
-                            <td>{{ work.createdAt|date('d/m/Y') }}</td>
-                            <td>{{ work.addedAt|date('d/m/Y') }}</td>
-                            <td>{{ work.editedAt|date('d/m/Y') }}</td>
-                            <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
-                                    <i class="icofont-ui-delete"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">
-                                    <i class="icofont-ui-edit"></i>
-                                </a>
-                            </td>
+                            <td class="adminThumbnail"><img src="{{ asset('images/user/' ~user.image) }}" class="img-fluid" alt="{{ user.userName }}"></td>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.userName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td data-order="{{ user.joinedAt|date("Y-m-d") }}">{{ user.joinedAt|date('d/m/Y') }}</td>
+                            <td data-order="{{ user.editedAt|date("Y-m-d") }}">{{ user.editedAt|date('d/m/Y') }}</td>
+                            <td>{{ user.isActive ? "Oui" : "Non" }}</td>
+                            <td>{{ user.isVerified ? "Oui" : "Non" }}</td>
+                            <td>{{ user.comments|length }}</td>
+                            {% if not is_staff %}
+                                <td>
+                                    <a href="{{ path('admin_user_edit_email', {'id': user.id}) }}" class="btn btn-sm btn-outline-warning" title="Changer l'email">
+                                        <i class="icofont-email"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_delete_user', {'id': user.id}) }}" class="btn btn-sm btn-outline-danger" title="Supprimer">
+                                        <i class="icofont-ui-delete"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if user.isActive %}
+                                    <a href="{{ path('app_ban_user', {'id': user.id}) }}" class="btn btn-sm btn-danger" title="Bannir">
+                                        <i class="icofont-ban"></i>
+                                    </a>
+                                    {% else %}
+                                    <a href="{{ path('app_ban_user', {'id': user.id}) }}" class="btn btn-sm btn-success" title="Bannir">
+                                        <i class="icofont-check-circled"></i>
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td>Protégé</td>
+                                <td></td>
+                                <td></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>
