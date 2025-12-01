@@ -1,4 +1,4 @@
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-controller="login-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,6 +10,13 @@
                     <form method="post" action="{{ path('app_login') }}" id="loginForm">
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        {% if access_denied %}
+                            <div class="alert alert-warning">
+                                <i class="icofont-lock me-2"></i>
+                                <strong>Accès restreint.</strong><br>
+                                <small>Veuillez vous connecter au compte administrateur pour accéder à cette page.</small>
+                            </div>
                         {% endif %}
                         <label for="username" hidden></label>
                         <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus placeholder="Votre Email">

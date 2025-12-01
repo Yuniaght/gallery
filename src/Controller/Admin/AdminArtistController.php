@@ -3,9 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Repository\ArtistRepository;
-use App\Repository\CommentRepository;
-use App\Repository\UserRepository;
-use App\Repository\WorkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

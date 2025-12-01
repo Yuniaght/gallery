@@ -14,20 +14,24 @@
                     <a class="nav-link" href="{{ path('app_artists_panel') }}">Artistes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Oeuvres</a>
+                    <a class="nav-link" href="{{ path('app_works_panel') }}">Oeuvres</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Catégorie</a>
+                    <a class="nav-link" href="{{ path('app_category_panel') }}">Catégorie</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Techniques</a>
+                    <a class="nav-link" href="{{ path('app_technic_panel') }}">Techniques</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Utilisateurs</a>
+                    <a class="nav-link" href="{{ path('app_users_panel') }}">Utilisateurs</a>
                 </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="">Commentaires</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Commentaires</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_comments_panel') }}">Toutes les commentaires</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_comments_pending_panel') }}">Commentaire en attente</a></li>
+                    </ul>
                 </li>
             </ul>
             <div class="d-flex">

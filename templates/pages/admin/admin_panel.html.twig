@@ -10,12 +10,17 @@
                     <p class="text-muted">Bienvenue dans l'espace de gestion.</p>
                 </div>
                 <div class="d-flex gap-2">
-                    {# Liens rapides #}
                     <a href="" class="btn btn-primary shadow-sm">
                         <i class="icofont-ui-add"></i> Nouvel Artiste
                     </a>
                     <a href="" class="btn btn-primary shadow-sm">
                         <i class="icofont-ui-add"></i> Nouvelle Œuvre
+                    </a>
+                    <a href="" class="btn btn-primary shadow-sm">
+                        <i class="icofont-ui-add"></i> Nouvelle Catégorie
+                    </a>
+                    <a href="" class="btn btn-primary shadow-sm">
+                        <i class="icofont-ui-add"></i> Nouvelle Technique
                     </a>
                 </div>
             </div>
@@ -45,7 +50,7 @@
                                 <i class="icofont-image fs-1 opacity-50"></i>
                             </div>
                         </div>
-                        <a href="" class="stretched-link"></a>
+                        <a href="{{ path('app_works_panel') }}" class="stretched-link"></a>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3">

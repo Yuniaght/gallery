@@ -1,5 +1,3 @@
-// Stimulus
-import './stimulus_bootstrap.js'
 // Datatable CSS
 import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css';
@@ -14,6 +12,11 @@ import './styles/icofont/icofont.min.css'
 // Bootstrap CSS
 import './styles/bootstrap.min.css'
 // Bootstrap JS
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
+window.bootstrap = bootstrap;
+// Animate CSS
+import 'animate.css/animate.min.css'
 // Custom CSS
 import './styles/app.css';
+// Stimulus
+import './stimulus_bootstrap.js';

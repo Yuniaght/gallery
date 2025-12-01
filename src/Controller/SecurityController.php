@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -10,7 +11,20 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request): Response
+    {
+        $routeParams = ['login' => 'true'];
+        $session = $request->getSession();
+        $targetPath = $session->get('_security.main.target_path'); // 'main' est le nom de ton firewall dans security.yaml
+
+        // 3. Si oui, on ajoute un paramètre 'access_denied'
+        if ($targetPath) {
+            $routeParams['access_denied'] = 'true';
+        }
+        return $this->redirectToRoute('app_home', $routeParams);
+    }
+
+    public function loginModal(AuthenticationUtils $authenticationUtils, mixed $checkAccessDenied = null): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -21,6 +35,7 @@ class SecurityController extends AbstractController
         return $this->render('partials/loginModal.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'access_denied' => $checkAccessDenied
         ]);
     }
 

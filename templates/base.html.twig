@@ -24,6 +24,6 @@
         <footer class="bg-primary container-fluid">
             {% include 'partials/footer.html.twig' %}
         </footer>
-        {{ render(controller('App\\Controller\\SecurityController::login')) }}
+        {{ render(controller('App\\Controller\\SecurityController::loginModal', {'checkAccessDenied': app.request.query.get('access_denied')})) }}
     </body>
 </html>
