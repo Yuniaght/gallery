@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -83,8 +84,6 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
-                    new PasswordStrength(),
-                    new NotCompromisedPassword(),
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
@@ -104,20 +103,20 @@ class RegistrationFormType extends AbstractType
                 'defer' => true,
                 'async' => true,
                 'size' => 'normal',
-            ]
+            ],
         ],
         'mapped' => false,
         'constraints' => [
             new RecaptchaTrue()
         ]
-    ])
-        ;
+    ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'attr' => ['data-turbo' => 'false'],
         ]);
     }
 }

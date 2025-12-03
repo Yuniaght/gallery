@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Class\Contact;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,7 +41,7 @@ class ContactType extends AbstractType
                         'defer' => true,
                         'async' => true,
                         'size' => 'normal',
-                    ]
+                    ],
                 ],
                 'mapped' => false,
                 'constraints' => [
@@ -55,6 +56,7 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contact::class,
+            'attr' => ['data-turbo' => 'false'],
         ]);
     }
 }

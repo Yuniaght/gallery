@@ -44,8 +44,6 @@ class ChangePasswordType extends AbstractType
                             'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
                             'max' => 4096,
                         ]),
-                        new PasswordStrength(),
-                        new NotCompromisedPassword(),
                     ],
                 ],
                 'second_options' => [

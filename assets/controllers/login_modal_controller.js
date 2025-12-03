@@ -12,7 +12,6 @@ export default class extends Controller {
     }
 
     openModal() {
-        // On utilise la globale définie dans app.js
         if (window.bootstrap) {
             const modal = new window.bootstrap.default.Modal(this.element);
             modal.show();
