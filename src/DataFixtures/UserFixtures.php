@@ -52,6 +52,7 @@ class UserFixtures extends Fixture
              ->setImage("bm.jpg")
              ->setPassword($this->hasher->hashPassword($user, "password"))
              ->setIsActive(1)
+             ->setIsVerified(true)
              ->setJoinedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween("-3 years", "now")))
              ->setEditedAt(new \DateTimeImmutable())
              ->setRoles(["ROLE_MODERATOR"]);
@@ -66,6 +67,7 @@ class UserFixtures extends Fixture
             ->setImage("jbdv.jpg")
             ->setPassword($this->hasher->hashPassword($user, "password"))
             ->setIsActive(1)
+            ->setIsVerified(true)
             ->setJoinedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween("-3 years", "now")))
             ->setEditedAt(new \DateTimeImmutable())
             ->setRoles(["ROLE_ADMIN"]);
