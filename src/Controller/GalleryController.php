@@ -51,6 +51,7 @@ final class GalleryController extends AbstractController
         $form->handleRequest($request);
         $userHasCommented = false;
         $commentPending = false;
+        $userComment = null;
         if ($user) {
             $hasCommented = $comment->findOneBy([
                 'work' => $work,
@@ -58,6 +59,7 @@ final class GalleryController extends AbstractController
             ]);
             if ($hasCommented) {
                 $userHasCommented = true;
+                $userComment = $hasCommented;
                 if (!$hasCommented->isPublic())
                     $commentPending = true;
             }
@@ -76,6 +78,7 @@ final class GalleryController extends AbstractController
             'work' => $work,
             'user_has_commented' => $userHasCommented,
             'comment_pending' => $commentPending,
+            'user_comment' => $userComment,
             'commentForm' => $form->createView(),
         ]);
     }

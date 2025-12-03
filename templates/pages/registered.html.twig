@@ -18,7 +18,7 @@
                         </div>
                         <p class="small text-muted">
                             Vous n'avez rien reçu ? Vérifiez vos spams ou
-                            <a href="{{ path('app_verify_resend_email', {'id': userId}) }}" class="text-decoration-none">cliquez ici pour renvoyer le lien</a>.
+                            <a href="{{ path('app_verify_resend_email', {'userName': userName}) }}" class="text-decoration-none">cliquez ici pour renvoyer le lien</a>.
                         </p>
                         <div class="mt-4">
                             <a href="{{ path('app_home') }}" class="btn btn-outline-primary">

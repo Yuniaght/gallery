@@ -40,7 +40,7 @@ class RegistrationController extends AbstractController
             $user->setJoinedAt(new \DateTimeImmutable('now'))
                  ->setEditedAt(new \DateTimeImmutable('now'))
                  ->setImage('default.jpg')
-                 ->setIsActive(0)
+                 ->setIsActive(1)
                  ->setIsVerified(0);
             $entityManager->persist($user);
             $entityManager->flush();
@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_registered', [
-                "id" => $user->getId()
+                'username' => $user->getUserName()
             ]);
         }
 
@@ -69,11 +69,11 @@ class RegistrationController extends AbstractController
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $user): Response
     {
-        $id = $request->query->get('id');
-        if (null === $id) {
+        $userName = $request->query->get('userName');
+        if (null === $userName) {
             return $this->redirectToRoute('app_register');
         }
-        $user = $user->find($id);
+        $user = $user->findOneBy(['userName' => $userName]);
         if (null === $user) {
             return $this->redirectToRoute('app_register');
         }
@@ -90,11 +90,11 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_verified');
     }
 
-    #[Route('/registered/{id}', name: 'app_registered')]
-    public function registered(int $id): Response
+    #[Route('/registered/{userName}', name: 'app_registered')]
+    public function registered(string $userName): Response
     {
         return $this->render('pages/registered.html.twig', [
-            'userId' => $id
+            'userName' => $userName
         ]);
     }
 
@@ -104,17 +104,20 @@ class RegistrationController extends AbstractController
         return $this->render('pages/verified.html.twig');
     }
 
-    #[Route('/verify/resend/{id}', name: 'app_verify_resend_email')]
-    public function resendVerifyEmail(int $id, UserRepository $user): Response
+    #[Route('/verify/resend/{userName}', name: 'app_verify_resend_email')]
+    public function resendVerifyEmail(string $userName, UserRepository $user): Response
     {
-        $user = $user->find($id);
+        $user = $user->findOneBy(
+            ['userName' => $userName]
+        );
+
         if (!$user) {
             $this->addFlash('danger', 'Utilisateur introuvable.');
             return $this->redirectToRoute('app_register');
         }
         if ($user->isVerified()) {
             $this->addFlash('info', 'Ce compte est déjà vérifié. Vous pouvez vous connecter.');
-            return $this->redirectToRoute('app_login'); // ou app_profile
+            return $this->redirectToRoute('app_home');
         }
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
             (new TemplatedEmail())
@@ -124,6 +127,6 @@ class RegistrationController extends AbstractController
                 ->htmlTemplate('registration/confirmation_email.html.twig')
         );
         $this->addFlash('success', 'Un nouveau lien a été envoyé à ' . $user->getEmail());
-        return $this->redirectToRoute('app_registered', ['id' => $id]);
+        return $this->redirectToRoute('app_registered', ['userName' => $userName]);
     }
 }

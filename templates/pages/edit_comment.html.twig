@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon avis{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success">
+                        <h3 class="h5 mb-0 text-dark">Modifier votre avis sur "{{ comment.work.title }}"</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-9 mb-3">
+                                {{ form_row(form.title) }}
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                {{ form_row(form.note) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.description) }}
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ path('app_work', {'slug': comment.work.slug}) }}" class="btn btn-outline-secondary">Annuler</a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="icofont-ui-edit"></i> Enregistrer les modifications
+                            </button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
