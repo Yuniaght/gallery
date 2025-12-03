@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_USER_WORK_COMMENT', columns: ['user_id', 'work_id'])]
@@ -22,12 +23,15 @@ class Comment
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
     private ?string $title = null;
 
     #[ORM\Column]
+    #[NotBlank]
     private ?float $note = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[NotBlank]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]

@@ -10,7 +10,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -27,6 +29,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[NotBlank]
+    #[Assert\Email(
+        message: 'Cet email n\'est pas valide'
+    )]
     private ?string $email = null;
 
     /**
@@ -41,13 +47,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\NotBlank(message: 'Entrez un mot de passe')]
+    #[Assert\Length(
+        min: 12,
+        max: 4096,
+        minMessage: 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Votre mot de passe doit contenir moins de {{ limit }} caractères',
+    )]
+    #[Assert\Regex(
+        pattern: '/[a-z]/',
+        message: 'Votre mot de passe doit contenir au moins une minuscule.'
+    )]
+    #[Assert\Regex(
+        pattern: '/[A-Z]/',
+        message: 'Votre mot de passe doit contenir au moins une majuscule.'
+    )]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        message: 'Votre mot de passe doit contenir au moins un chiffre.'
+    )]
+    #[Assert\Regex(
+        pattern: '/[^a-zA-Z0-9]/',
+        message: 'Votre mot de passe doit contenir au moins un caractère spécial.'
+    )]
+    private ?string $plainPassword = null;
+
     #[ORM\Column(length: 255, unique: true)]
     private ?string $userName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
@@ -158,6 +189,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+        $this->plainPassword = null;
     }
 
     public function getUserName(): ?string
@@ -204,6 +236,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
