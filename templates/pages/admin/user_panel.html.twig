@@ -3,28 +3,28 @@
 {% block title %}Gallery - Panel Utilisateur{% endblock %}
 
 {% block body %}
-    <main class="container">
+    <main class="container-fluid">
         <section class="row">
-            <div class="col-md-9 offset-1">
+            <div class="col-md-6 offset-3">
                 <h1 class="display-4 pb-4">Liste des utilisateurs</h1>
             </div>
         </section>
-        <section>
-            <div class="row" data-controller="datatable" data-order-index="5" data-order-dir="desc" id="artistTable">
-                <table class="table table-hover display pt-3" >
+        <section class="row">
+            <div class="col-md-12" data-controller="datatable" data-order-index="5" data-order-dir="desc" id="artistTable">
+                <table class="table table-hover display pt-3 w-100" >
                     <thead>
                     <tr>
                         <th scope="col" class="adminThumbnail" data-dt-order="disable">Image</th>
-                        <th scope="col">Prénom</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Nom d'utilisateur</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">A rejoint le</th>
-                        <th scope="col">Mis à jour le</th>
-                        <th scope="col">Est actif</th>
-                        <th scope="col">Est vérifié</th>
-                        <th scope="col">Nombre de commentaire</th>
-                        <th scope="col" colspan="3" data-dt-order="disable">Actions</th>
+                        <th scope="col" class="text-nowrap">Prénom</th>
+                        <th scope="col" class="text-nowrap">Nom</th>
+                        <th scope="col" class="text-nowrap">Nom d'utilisateur</th>
+                        <th scope="col" class="text-nowrap">Email</th>
+                        <th scope="col" class="text-nowrap">A rejoint le</th>
+                        <th scope="col" class="text-nowrap">Mis à jour le</th>
+                        <th scope="col" class="text-nowrap">Est actif</th>
+                        <th scope="col" class="text-nowrap">Est vérifié</th>
+                        <th scope="col" class="text-nowrap">Nombre de commentaire</th>
+                        <th scope="col" data-dt-order="disable" class="text-nowrap">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -41,33 +41,29 @@
                             <td>{{ user.isActive ? "Oui" : "Non" }}</td>
                             <td>{{ user.isVerified ? "Oui" : "Non" }}</td>
                             <td>{{ user.comments|length }}</td>
-                            {% if not is_staff %}
-                                <td>
+                            <td>
+                                <div class="d-flex align-items-center gap-1">
+                                    {% if not is_staff %}
                                     <a href="{{ path('admin_user_edit_email', {'id': user.id}) }}" class="btn btn-sm btn-outline-warning" title="Changer l'email">
                                         <i class="icofont-email"></i>
                                     </a>
-                                </td>
-                                <td>
                                     <a href="{{ path('app_delete_user', {'id': user.id}) }}" class="btn btn-sm btn-outline-danger" title="Supprimer">
                                         <i class="icofont-ui-delete"></i>
                                     </a>
-                                </td>
-                                <td>
                                     {% if user.isActive %}
-                                    <a href="{{ path('app_ban_user', {'id': user.id}) }}" class="btn btn-sm btn-danger" title="Bannir">
-                                        <i class="icofont-ban"></i>
-                                    </a>
+                                        <a href="{{ path('app_ban_user', {'id': user.id}) }}" class="btn btn-sm btn-danger" title="Bannir">
+                                            <i class="icofont-ban"></i>
+                                        </a>
                                     {% else %}
-                                    <a href="{{ path('app_ban_user', {'id': user.id}) }}" class="btn btn-sm btn-success" title="Bannir">
-                                        <i class="icofont-check-circled"></i>
-                                    </a>
+                                        <a href="{{ path('app_ban_user', {'id': user.id}) }}" class="btn btn-sm btn-success" title="Bannir">
+                                            <i class="icofont-check-circled"></i>
+                                        </a>
                                     {% endif %}
-                                </td>
                             {% else %}
-                                <td>Protégé</td>
-                                <td></td>
-                                <td></td>
+                                Protégé
                             {% endif %}
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

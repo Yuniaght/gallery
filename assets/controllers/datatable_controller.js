@@ -25,8 +25,6 @@ export default class extends Controller {
             lengthChange: false,
             info: false,
             responsive: true,
-            colReorder: true,
-            rowReorder: true,
             fixedHeader: true,
             select: true,
         })
