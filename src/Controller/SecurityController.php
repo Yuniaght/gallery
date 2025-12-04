@@ -15,8 +15,7 @@ class SecurityController extends AbstractController
     {
         $routeParams = ['login' => 'true'];
         $session = $request->getSession();
-        $targetPath = $session->get('_security.main.target_path'); // 'main' est le nom de ton firewall dans security.yaml
-        // 3. Si oui, on ajoute un paramètre 'access_denied'
+        $targetPath = $session->get('_security.main.target_path');
         if ($targetPath) {
             $routeParams['access_denied'] = 'true';
         }

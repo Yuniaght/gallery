@@ -16,7 +16,6 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (!$user->isActive()) {
-            // Cette exception empêche le login et affiche ce message précis
             throw new CustomUserMessageAuthenticationException('Votre compte a été banni, veuillez contacter un administrateur');
         }
     }
